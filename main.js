@@ -763,6 +763,34 @@ const port = process.env.PORT || 3000;
                             '404': { description: 'No Tagihan data found' },
                             '500': { description: 'Database error occurred' }
                         }
+                    },
+                    post: {
+                        tags: ['DataTagihan'],
+                        summary: 'Create new Tagihan data',
+                        requestBody: {
+                            required: true,
+                            content: {
+                                'application/json': {
+                                    schema: {
+                                        type: 'object',
+                                        required: ['Tetap', 'Sks', 'Kesehatan', 'Terintegrasi', 'ICE', 'Tahun Ajaran'],
+                                        properties: {
+                                            Tetap: { type: 'number' },
+                                            Sks: { type: 'number' },
+                                            Kesehatan: { type: 'number' },
+                                            Terintegrasi: { type: 'number' },
+                                            ICE: { type: 'number' },
+                                            'Tahun Ajaran': { type: 'string' }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        responses: {
+                            '201': { description: 'Tagihan created successfully' },
+                            '400': { description: 'Invalid request' },
+                            '500': { description: 'Database error occurred' }
+                        }
                     }
                 },
                 '/API/DataTagihan/{IdTagihan}': {
@@ -797,6 +825,24 @@ const port = process.env.PORT || 3000;
                         },
                         responses: {
                             '200': { description: 'Tagihan updated successfully' },
+                            '404': { description: 'No Tagihan found' },
+                            '500': { description: 'Database error occurred' }
+                        }
+                    },
+                    delete: {
+                        tags: ['DataTagihan'],
+                        summary: 'Delete Tagihan data by IdTagihan',
+                        parameters: [
+                            {
+                                name: 'IdTagihan',
+                                in: 'path',
+                                required: true,
+                                description: 'Tagihan ID',
+                                schema: { type: 'string' }
+                            }
+                        ],
+                        responses: {
+                            '200': { description: 'Tagihan deleted successfully' },
                             '404': { description: 'No Tagihan found' },
                             '500': { description: 'Database error occurred' }
                         }
