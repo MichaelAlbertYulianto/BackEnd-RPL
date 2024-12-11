@@ -198,7 +198,7 @@ router.delete('/:nim', async (req, res) => {
         }
 
         // Convert NIM string to number
-        const nimNumber = parseInt(req.params.nim);
+        const nimNumber = req.params.nim;
 
         // First, find the mahasiswa to get the VA
         const mahasiswa = await mongoose.connection.db.collection('Mahasiswa').findOne({ NIM: nimNumber });

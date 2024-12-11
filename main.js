@@ -255,7 +255,7 @@ const port = process.env.PORT || 3000;
                                 in: 'path',
                                 required: true,
                                 description: 'Student ID number',
-                                schema: { type: 'integer' }
+                                schema: { type: 'string' }
                             }
                         ],
                         responses: {
