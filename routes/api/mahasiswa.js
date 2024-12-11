@@ -140,7 +140,7 @@ router.put('/:nim', async (req, res) => {
         const nimNumber = parseInt(req.params.nim);
 
         // Validate required fields
-        const requiredFields = ['NIM', 'Password', 'Tanggal Lahir', 'NamaOrangTua', 'IdInstansi', 'nama', 'saldo', 'Jurusan'];
+        const requiredFields = ['Password', 'Tanggal Lahir', 'NamaOrangTua', 'IdInstansi', 'nama', 'Jurusan'];
         for (const field of requiredFields) {
             if (!req.body[field]) {
                 return res.status(400).json({ message: `Missing required field: ${field}` });
@@ -165,9 +165,13 @@ router.put('/:nim', async (req, res) => {
             VA: VA,
             IdInstansi: req.body.IdInstansi,
             nama: req.body.nama,
-            saldo: req.body.saldo,
             Jurusan: req.body.Jurusan
         };
+
+        // Allow client to set saldo to 0 if specified
+        if (req.body.saldo !== undefined) {
+            updateData.saldo = req.body.saldo;
+        }
 
         // Use the native MongoDB driver through mongoose to match shell command
         const result = await mongoose.connection.db.collection('Mahasiswa').updateOne({ NIM: nimNumber }, { $set: updateData });

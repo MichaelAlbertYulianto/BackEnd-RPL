@@ -66,7 +66,7 @@ const port = process.env.PORT || 3000;
                                         required: ['NIM', 'Password', 'Tanggal Lahir', 'NamaOrangTua', 'IdInstansi', 'nama', 'Jurusan'],
                                         properties: {
                                             NIM: {
-                                                type: 'integer',
+                                                type: 'string',
                                                 description: 'Student ID number'
                                             },
                                             Password: {
@@ -205,12 +205,8 @@ const port = process.env.PORT || 3000;
                                 'application/json': {
                                     schema: {
                                         type: 'object',
-                                        required: ['NIM', 'Password', 'Tanggal Lahir', 'NamaOrangTua', 'IdInstansi', 'nama', 'saldo', 'Jurusan'],
+                                        required: ['Password', 'Tanggal Lahir', 'NamaOrangTua', 'IdInstansi', 'nama', 'saldo', 'Jurusan'],
                                         properties: {
-                                            NIM: {
-                                                type: 'string',
-                                                description: 'Student ID number'
-                                            },
                                             Password: {
                                                 type: 'string',
                                                 description: 'Student password'
@@ -224,7 +220,7 @@ const port = process.env.PORT || 3000;
                                                 description: 'Student parent name'
                                             },
                                             IdInstansi: {
-                                                type: 'string',
+                                                type: 'number',
                                                 description: 'Institution ID'
                                             },
                                             nama: {
