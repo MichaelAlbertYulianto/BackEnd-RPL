@@ -78,6 +78,19 @@ router.post('/', async (req, res) => {
             }
         }
 
+        // Check if NIM is a valid 8-digit number
+        const nimNumber = parseInt(req.body.NIM);
+        if (isNaN(nimNumber) || req.body.NIM.length !== 8) {
+            return res.status(400).json({ message: "NIM must be a valid 8-digit number" });
+        }
+
+        // Check if NIM already exists in Mahasiswa collection
+        const existingMahasiswa = await mongoose.connection.db.collection('Mahasiswa')
+            .findOne({ NIM: nimNumber });
+        if (existingMahasiswa) {
+            return res.status(409).json({ message: 'Student with this NIM already exists' });
+        }
+
         // Check if IdInstansi exists in Instansi collection
         const instansiData = await mongoose.connection.db.collection('Instansi')
             .findOne({ IdInstansi: req.body.IdInstansi });
@@ -90,7 +103,7 @@ router.post('/', async (req, res) => {
 
         // Construct mahasiswa data with auto-generated saldo and VA
         const mahasiswaData = {
-            NIM: req.body.NIM,
+            NIM: nimNumber.toString(),
             Password: req.body.Password,
             'Tanggal Lahir': req.body['Tanggal Lahir'],
             NamaOrangTua: req.body.NamaOrangTua,
